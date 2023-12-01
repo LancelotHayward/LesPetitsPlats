@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500&display=swap');
 :root {
     /* Colors */
     --yellow: #FFD15B;
@@ -40,6 +40,39 @@ h1 {
 main {
     background-color: var(--light-gray);
 }
+/* Nav */
+nav {
+    display: flex;
+    justify-content: space-between;
+    height: 132px;
+    align-items: center;
+    padding: 0 100px;
+}
+nav > p {
+    font-family: var(--title);
+}
+nav > div {
+    display: flex;
+    gap: 66px;
+}
+.tag-holder {
+    padding: 16px;
+    background-color: var(--white);
+    border-radius: 11px;
+    font-weight: 500;
+    display: flex;
+}
+.tag-holder::after {
+    content: url(../images/dropdown.png);
+    margin-left: 63px;
+}
+.tags-visible::after {
+    transform: scaleY(-1);
+}
+.card-holder {
+    display: flex;
+    justify-content: space-evenly;
+}
 /* Card */
 .card {
     width: 380px;
@@ -63,8 +96,20 @@ main {
     height: 253px;
     object-fit: cover;
 }
+.card-body {
+    margin: 0 25px;
+    font-size: 11pt;
+}
 .card h3 {
     color: var(--dark-gray);
+}
+.card-ingredients > ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 276px;
+    padding: unset;
 }
 .card-dose {
     color: var(--dark-gray);
