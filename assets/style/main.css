@@ -45,8 +45,13 @@ nav {
     display: flex;
     justify-content: space-between;
     height: 132px;
-    align-items: center;
+    transform: translateY(21px);
     padding: 0 100px;
+    position: relative;
+    z-index: 1;
+}
+nav[data-selected-lines="1"] {
+    height: calc(132px + 54px);
 }
 nav > p {
     font-family: var(--title);
@@ -59,15 +64,63 @@ nav > div {
     padding: 16px;
     background-color: var(--white);
     border-radius: 11px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+.tag-holder > * {
+    display: none;
+}
+.tag-holder:nth-child(2) {
+    transform: translateX(261px);
+}
+.tag-holder:nth-child(3) {
+    transform: translateX(522px);
+}
+.tag-holder > label {
     font-weight: 500;
     display: flex;
 }
-.tag-holder::after {
+.tag-holder > label::after {
     content: url(../images/dropdown.png);
     margin-left: 63px;
 }
-.tags-visible::after {
+.tags-visible {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5))
+}
+.tags-visible > label::after {
     transform: scaleY(-1);
+}
+.tags-visible > * {
+    display: flex;
+}
+/* Selected breaks out of tag-holder when not tags-visible */
+.selected {
+    display: flex;
+    background-color: var(--yellow);
+    position: absolute;
+    padding: 16px;
+    border-radius: 11px;
+    transform: translate(-16px, 58px);
+}
+.tags-visible .selected {
+    position: relative;
+    padding: 13px 16px;
+    border-radius: unset;
+    transform: unset;
+    margin: 0 -16px;
+}
+.selected::after {
+    content: url(../images/close.png);
+    margin-left: 63px;
+}
+.tags-visible .selected::after {
+    content: unset;
+    margin-left: unset;
+}
+#first-unselected {
+    margin-top: 8px;
 }
 .card-holder {
     display: flex;
