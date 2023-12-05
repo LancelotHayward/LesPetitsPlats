@@ -35,6 +35,49 @@ header > div {
 }
 h1 {
     color: var(--yellow);
+    font-size: 44px;
+}
+header form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(37px);
+    max-width: 1028px;
+    margin-left: auto;
+    margin-right: auto;
+}
+header form input {
+    height: 72px;
+    width: 917px;
+    font-size: 13pt;
+    padding-left: 35px;
+    outline: none;
+}
+header form > * {
+    border: none;
+    border-radius: 10px;
+}
+header form .button-search {
+    background-color: black;
+    padding: 12px;
+    transform: translateX(-85px);
+}
+header form .button-search img {
+    filter: invert(1);
+}
+header form .button-search:hover {
+    background-color: var(--yellow);
+}
+header form .button-search:hover img {
+    filter: unset;
+}
+header form .button-clear {
+    background: none;
+    transform: translateX(-100px);
+    filter: invert(0.4);
+}
+input:placeholder-shown + .button-clear {
+    visibility: hidden;
 }
 /* Main */
 main {
@@ -95,6 +138,33 @@ nav > div {
 .tags-visible > * {
     display: flex;
 }
+/* Tag search */
+.tag-holder form input {
+    border-radius: 2px;
+    outline: none;
+    height: 36px;
+    border: 2px solid var(--light-gray);
+    color: var(--dark-gray);
+    padding-left: 8px;
+}
+.tag-holder form button {
+    position: absolute;
+    border: none;
+    background: none;
+    right: 24px;
+    top: 62px;
+}
+.tag-holder .button-clear {
+    right: 44px;
+    top: 58px;
+}
+.tag-holder .button-clear img {
+    height: 6px;
+    filter: invert(0.4);
+}
+.tag-holder .button-search img {
+    height: 14px;
+}
 /* Selected breaks out of tag-holder when not tags-visible */
 .selected {
     display: flex;
@@ -119,12 +189,22 @@ nav > div {
     content: unset;
     margin-left: unset;
 }
+.tags-visible .selected:hover::after {
+    content: url(../images/remove.png);
+    position: absolute;
+    right: 14px;
+    transform: translateY(3px);
+}
+.tags-visible .selected:hover {
+    font-weight: bold;
+}
 #first-unselected {
     margin-top: 8px;
 }
 .card-holder {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 48px;
 }
 /* Card */
 .card {

@@ -11,19 +11,31 @@
     <header>
         <img src="assets/images/Logo.svg" alt="Les Petitis Plats Logo">
         <div>
-            <h1>Chercher parmi plus de 1500 recettes du quotidien, simples et délicieuses</h1>
+            <h1>Chercher parmi plus de 1500 recettes <br>du quotidien, simples et délicieuses</h1>
             <form>
-                <input type="search">
+                <input tye="search" placeholder="Rechercher une recette, un ingrédient, ...">
+                <button class="button-clear">
+                    <img src="assets/images/close.png" alt="clear search">
+                </button>
+                <button class="button-search">
+                    <img src="assets/images/search.png" alt="search">
+                </button>
             </form>
         </div>
     </header>
     <main>
         <nav data-selected-lines="1">
             <div>
-                <div id="ingredient-tags" class="tag-holder">
+                <div id="ingredient-tags" class="tag-holder tags-visible">
                     <label>Ingrédients</label>
                     <form>
-                        <input type="search">
+                        <input type="search" placeholder="">
+                        <button class="button-clear">
+                            <img src="assets/images/close.png" alt="clear search">
+                        </button>
+                        <button class="button-search">
+                            <img src="assets/images/search.png" alt="search">
+                        </button>
                     </form>
                     <span class="tag selected">Thing 1</span>
                     <span id="first-unselected"class="tag">Thing 2</span>
