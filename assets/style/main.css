@@ -48,7 +48,7 @@ header form {
 }
 header form input {
     height: 72px;
-    width: 917px;
+    width: 954px;
     font-size: 13pt;
     padding-left: 35px;
     outline: none;
@@ -56,6 +56,9 @@ header form input {
 header form > * {
     border: none;
     border-radius: 10px;
+}
+header form button {
+    cursor: pointer;
 }
 header form .button-search {
     background-color: black;
@@ -96,6 +99,9 @@ nav {
 nav[data-selected-lines="1"] {
     height: calc(132px + 54px);
 }
+nav[data-selected-lines="2"] {
+    height: calc(132px + 54px + 54px);
+}
 nav > p {
     font-family: var(--title);
 }
@@ -111,6 +117,7 @@ nav > div {
     display: flex;
     flex-direction: column;
     gap: 13px;
+    user-select: none
 }
 .tag-holder > * {
     display: none;
@@ -121,11 +128,12 @@ nav > div {
 .tag-holder:nth-child(3) {
     transform: translateX(522px);
 }
-.tag-holder > label {
+.tags-label {
     font-weight: 500;
     display: flex;
+    cursor: pointer;
 }
-.tag-holder > label::after {
+.tags-label::after {
     content: url(../images/dropdown.png);
     margin-left: 63px;
 }
@@ -153,6 +161,7 @@ nav > div {
     background: none;
     right: 24px;
     top: 62px;
+    cursor: pointer;
 }
 .tag-holder .button-clear {
     right: 44px;
@@ -195,15 +204,18 @@ nav > div {
     right: 14px;
     transform: translateY(3px);
 }
-.tags-visible .selected:hover {
+.tags-visible .tag:hover {
     font-weight: bold;
+}
+.tag:hover {
+    cursor: pointer;
 }
 #first-unselected {
     margin-top: 8px;
 }
 .card-holder {
     display: flex;
-    justify-content: center;
+    padding: 0 100px;
     gap: 48px;
 }
 /* Card */
