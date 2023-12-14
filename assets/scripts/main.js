@@ -154,6 +154,16 @@ function updateNavLineSpace(holderIDs) {
     }
     document.getElementsByTagName("nav")[0].setAttribute("data-selected-lines", requiredSpace)
 }
+function getRecipes(data, filter) {
+    return data
+}
+function displayRecipies(data) {
+    const holder = document.getElementsByClassName("card-holder")[0]
+    data.forEach(recipe => {
+        holder.appendChild(cardConstructor(recipe))
+    })
+    updateRecipeCount(data.length.toString())
+}
 //Init
 function init() {
     preventFormDefaults(document.getElementsByTagName("form"))
@@ -162,7 +172,7 @@ function init() {
     createTagHolderTogglers(holderIDs, document.getElementsByClassName("tags-label"))
     updateNavLineSpace(holderIDs)
     createTagSelectionners(holderIDs)
-    updateRecipeCount("03")
     getTags(recipes)
+    displayRecipies(recipes)
 }
 init()

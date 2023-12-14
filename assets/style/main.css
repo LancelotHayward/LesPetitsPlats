@@ -217,6 +217,8 @@ nav > div {
     display: flex;
     padding: 0 100px;
     gap: 48px;
+    padding-bottom: 48px;
+    flex-wrap: wrap;
 }
 /* Card */
 .card {
