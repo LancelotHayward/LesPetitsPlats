@@ -210,7 +210,7 @@ nav > div {
 .tag:hover {
     cursor: pointer;
 }
-#first-unselected {
+.first-unselected {
     margin-top: 8px;
 }
 .card-holder {

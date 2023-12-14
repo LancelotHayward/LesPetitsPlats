@@ -73,6 +73,35 @@ function getTags(recipes) {
 function toggleTagHolder(id) {
     document.getElementById(id).classList.toggle("tags-visible")
 }
+function createTagElement(tag_name, selected) {
+    let tag = document.createElement("span")
+    tag.classList.add("tag")
+    if (selected !== "unselected") {
+        tag.classList.add(selected)
+    }
+    tag.textContent = tag_name
+    return tag
+}
+function updateTagHolders(tags) {
+    //Selected tags
+    for (let i = 0; i < 3; i++) {//tag_type of tags.selected) {
+        let holder = document.getElementById("tags-" + Object.keys(tags.selected)[i])
+        for (let tag_selected of tag_type) {
+            holder.appendChild(createTagElement(tag_selected, "selected"))
+        }
+    }
+    for (let i = 0; i < 3; i++) {
+        let holder = document.getElementById("tags-" + Object.keys(tags.unselected)[i])
+        for (let j = 0; j < 7; j++) {
+            if (j == 0) {
+                holder.appendChild(createTagElement(tags.unselected[i][j], "first-unselected"))
+            }
+            else {
+                holder.appendChild(createTagElement(tags.unselected[i][j], "unselected"))
+            }
+        }
+    }
+}
 function createTagHolderTogglers(holderIDs, labels) {
     for (let i = 0; i < holderIDs.length; i++) {
         labels[i].addEventListener("click", function(){
