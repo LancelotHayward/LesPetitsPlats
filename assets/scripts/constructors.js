@@ -15,6 +15,54 @@ function imageConstructor(file_name, title) {
     return image
 }
 
+//Nav
+function navConstructor(tags) {
+    let nav = document.createElement("nav")
+
+    //Card holders
+    let navDiv = document.createElement("div")
+    navDiv.appendChild(tagHolderConstructor("Ingrédients", tags))
+    navDiv.appendChild(tagHolderConstructor("Appareils", tags))
+    navDiv.appendChild(tagHolderConstructor("Ustensiles", tags))
+    nav.appendChild(navDiv)
+
+    //Recipe count
+    nav.appendChild(childConstructor("p", false))
+
+    return nav
+}
+function tagHolderConstructor(type, tags) {
+    let tag_holder = childConstructor("div", "tag-holder")
+    tag_holder.appendChild(childConstructor("label", "tags-label", type))
+    tag_holder.appendChild(tagSearchConstructor(type))
+    tags.forEach(tag => {
+        tag_holder.appendChild(tagConstructor(tag))
+    })
+    return tag_holder
+}
+function tagSearchConstructor(type) {
+    let form = document.createElement("form")
+    form.appendChild(searchBoxConstructor(type))
+    form.appendChild(searchButtonConstructor("clear"))
+    form.appendChild(searchButtonConstructor("search"))
+}
+function searchBoxConstructor(type) {
+    let searchBox = document.createElement("input")
+    searchBox.setAttribute("id", "search-" + type)
+    searchBox.setAttribute("type", "search")
+    searchBox.setAttribute("placeholder", "")
+    return searchBox
+}
+function searchButtonConstructor(type) {
+    let button = childConstructor("button", "button-" + type)
+    button.appendChild(imageConstructor(type + ".png", type))
+}
+function tagConstructor(data) {
+    let tag = childConstructor("span", "tag", data.name)
+    tag.classList.add(data.selection)
+    return tag
+}
+
 //Recipes
 function cardConstructor(recipe) {
     let card = childConstructor("article", "card")
