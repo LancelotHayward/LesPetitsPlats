@@ -33,12 +33,21 @@ function navConstructor(tags) {
 }
 function tagHolderConstructor(type, tags) {
     let tag_holder = childConstructor("div", "tag-holder")
-    tag_holder.appendChild(childConstructor("label", "tags-label", type))
+    let tag_holder_id = "tags-" + type
+    tag_holder.setAttribute("id", tag_holder_id)
+    tag_holder.appendChild(tagsLabelConstructor(type, tag_holder_id))
     tag_holder.appendChild(tagSearchConstructor(type))
     tags.forEach(tag => {
-        tag_holder.appendChild(tagConstructor(tag))
+        tag_holder.appendChild(tagConstructor(tag, type))
     })
     return tag_holder
+}
+function tagLabelConstructor(type, tag_holder_id) {
+    let label = childConstructor("label", "tags-label", type)
+    label.addEventListener("click", function(){
+        toggleTagHolder(tag_holder_id)
+    })
+    return label
 }
 function tagSearchConstructor(type) {
     let form = document.createElement("form")
@@ -57,9 +66,17 @@ function searchButtonConstructor(type) {
     let button = childConstructor("button", "button-" + type)
     button.appendChild(imageConstructor(type + ".png", type))
 }
-function tagConstructor(data) {
+function tagConstructor(data, type) {
     let tag = childConstructor("span", "tag", data.name)
-    tag.classList.add(data.selection)
+    if (data.is_selected) {
+        tag.classList.add("selected")
+    }
+    if (data.is_visible) {
+        tag.classList.add("visible")
+    }
+    tag.addEventListener("click", function(){
+        toggleTag(type, data.name)
+    })
     return tag
 }
 

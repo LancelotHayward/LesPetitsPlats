@@ -16,126 +16,91 @@ function createSearchClearers(searchIDs, buttons) {
     }
 }
 //Get tags
-function notDuplicate(list, addition) {
-    for (let i = 0; i < list.length; i++) {
-        if (list[i].toLowerCase() === addition.toLowerCase()) {
+function getTagsFromJSON(json) {
+    let tags = []
+    for (recipe of json) {
+        if (recipe.ingredients) {
+            for (ingredient of recipe.ingredients) {
+                let new_tag = {
+                    "type": "Ingrédients",
+                    "name": ingredient.ingredient,
+                    "is_selected": false,
+                    "is_visible": true
+                }
+                if (notDuplicate(tags, new_tag)) {
+                    tags.push(new_tag)
+                }
+            }
+        }
+        if (recipe.appliance) {
+            let new_tag = {
+                "type": "Appareils",
+                "name": recipe.appliance,
+                "is_selected": false,
+                "is_visible": true
+            }
+            if (notDuplicate(tags, new_tag)) {
+                tags.push(new_tag)
+            }
+        }
+        if (recipe.ustensils) {
+            for (ustensils of recipe.ustensils) {
+                let new_tag = {
+                    "type": "Ustensiles",
+                    "name": ustensils,
+                    "is_selected": false,
+                    "is_visible": true
+                }
+                if (notDuplicate(tags, new_tag)) {
+                    tags.push(new_tag)
+                }
+            }
+        }
+    }
+    return tags
+}
+function notDuplicate(tags, new_tag) {
+    const new_tag_name = new_tag.name.toLowerCase()
+    for (tag of tags) {
+        const tag_name = tag.name.toLowerCase()
+        if (tag_name == new_tag_name && tag.type == new_tag.type) {
             return false
         }
     }
     return true
 }
-function getIngredients(recipes) {
-    let ingredients = []
-    recipes.forEach(recipe => 
-        recipe.ingredients.forEach(
-            element => {
-                if (notDuplicate(ingredients, element.ingredient)) {
-                    ingredients.push(element.ingredient)
-                }
-            }
-        )
-    )
-    return ingredients
-}
-function getAppliances(recipes) {
-    let appliances = []
-    recipes.forEach(
-        recipe =>  {
-            if (notDuplicate(appliances, recipe.appliance)) {
-                appliances.push(recipe.appliance)
-            }
-        }
-    )
-    return appliances
-}
-function getTools(recipes) {
-    let tools = []
-    recipes.forEach(recipe => 
-        recipe.ustensils.forEach(
-            tool => {
-                if (notDuplicate(tools, tool)) {
-                    tools.push(tool)
-                }
-            }
-        )
-    )
-    return tools
-}
-function getTags(recipes) {
-    let tags = {
-        "ingredients": getIngredients(recipes),
-        "appliances": getAppliances(recipes),
-        "tools": getTools(recipes)
+function getTagData(type, tag) {
+    let tagData = {
+        "type": type,
+        "name": tag.textContent
     }
-    return tags
+    tagData.is_selected = tag.classList.contains("selected")
+    tagData.is_visible = tag.classList.contains("visible")
+    return tagData
+}
+function toggleTag(type, tagToToggle) {
+    const holder = document.getElementById("tags-" + type)
+    const tags = holder.getElementsByClassName("tag")
+    let tagList = []
+    for (tag of tags) {
+        if (tag.textContent == tagToToggle) {
+            tag.classList.toggle("selected")
+        }
+        tagList.push(getTagData(type, tag))
+    }
+    //Remove existing DOM elements (using traditional for loop because removing inside for (x of y) loops is cursed)
+    const length = tags.length
+    for (let i = 0; i < length; i++) {
+        tags[0].remove()
+    }
+    tagList.sort((a,b) => b.is_selected - a.is_selected)
+    for (tag of tagList) {
+        holder.appendChild(tagConstructor(type, tag))
+    }
 }
 //Tag Holders
 function toggleTagHolder(id) {
     document.getElementById(id).classList.toggle("tags-visible")
-}
-function createTagElement(tag_name, selected) {
-    let tag = document.createElement("span")
-    tag.classList.add("tag")
-    if (selected !== "unselected") {
-        tag.classList.add(selected)
-    }
-    tag.textContent = tag_name
-    return tag
-}
-function updateTagHolders(tags) {
-    //Selected tags
-    for (let i = 0; i < 3; i++) {//tag_type of tags.selected) {
-        let holder = document.getElementById("tags-" + Object.keys(tags.selected)[i])
-        for (let tag_selected of tag_type) {
-            holder.appendChild(createTagElement(tag_selected, "selected"))
-        }
-    }
-    for (let i = 0; i < 3; i++) {
-        let holder = document.getElementById("tags-" + Object.keys(tags.unselected)[i])
-        for (let j = 0; j < 7; j++) {
-            if (j == 0) {
-                holder.appendChild(createTagElement(tags.unselected[i][j], "first-unselected"))
-            }
-            else {
-                holder.appendChild(createTagElement(tags.unselected[i][j], "unselected"))
-            }
-        }
-    }
-}
-function createTagHolderTogglers(holderIDs, labels) {
-    for (let i = 0; i < holderIDs.length; i++) {
-        labels[i].addEventListener("click", function(){
-            toggleTagHolder(holderIDs[i]) })
-    }
-}
-//Tags
-function getTagsContent(tags) {
-    let tag_contents = []
-    for (tag of tags) {
-        tag_contents.push(tag.textContent)
-    }
-    return tag_contents
-}
-function toggleTagSelection(tag_holder_id, tag_text) {
-    let tag_holder = document.getElementById(tag_holder_id)
-    let tags = tag_holder.getElementsByClassName("tag")
-    let tags_content = getTagsContent(tags)
-    for (let i = 0; i < tags.length; i++) {
-        if (tags_content[i] == tag_text) {
-            tags[i].classList.toggle("selected")
-        }
-    }
-}
-function createTagSelectionners(holderIDs) {
-    for (let i = 0; i < holderIDs.length; i++) {
-        let holder = document.getElementById(holderIDs[i])
-        let tags = holder.getElementsByClassName("tag")
-        for (let j = 0; j < tags.length; j++) {
-            tags[j].addEventListener("click", function(){
-                console.log(tags[j].textContent)
-                toggleTagSelection(holderIDs[i], tags[j].textContent) })
-        }
-    }
 }
 //Display recipes
 function updateRecipeCount(count) {
@@ -169,10 +134,10 @@ function init() {
     preventFormDefaults(document.getElementsByTagName("form"))
     createSearchClearers(["search-normal", "search-ingredients", "search-appliances", "search-tools"], document.getElementsByClassName("button-clear"))
     const holderIDs = ["tags-ingredients", "tags-appliances", "tags-tools"]
-    createTagHolderTogglers(holderIDs, document.getElementsByClassName("tags-label"))
-    updateNavLineSpace(holderIDs)
-    createTagSelectionners(holderIDs)
-    getTags(recipes)
+    // createTagHolderTogglers(holderIDs, document.getElementsByClassName("tags-label"))
+    // updateNavLineSpace(holderIDs)
+    // createTagSelectionners(holderIDs)
     displayRecipies(recipes)
+    getTagsFromJSON(recipes)
 }
 init()
