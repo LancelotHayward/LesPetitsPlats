@@ -32,10 +32,11 @@ function navConstructor(tags) {
     return nav
 }
 function tagHolderConstructor(type, tags) {
+    tags = tags.filter(tag => tag.type == type)
     let tag_holder = childConstructor("div", "tag-holder")
     let tag_holder_id = "tags-" + type
     tag_holder.setAttribute("id", tag_holder_id)
-    tag_holder.appendChild(tagsLabelConstructor(type, tag_holder_id))
+    tag_holder.appendChild(tagLabelConstructor(type, tag_holder_id))
     tag_holder.appendChild(tagSearchConstructor(type))
     tags.forEach(tag => {
         tag_holder.appendChild(tagConstructor(tag, type))
@@ -54,6 +55,7 @@ function tagSearchConstructor(type) {
     form.appendChild(searchBoxConstructor(type))
     form.appendChild(searchButtonConstructor("clear"))
     form.appendChild(searchButtonConstructor("search"))
+    return form
 }
 function searchBoxConstructor(type) {
     let searchBox = document.createElement("input")
@@ -65,6 +67,7 @@ function searchBoxConstructor(type) {
 function searchButtonConstructor(type) {
     let button = childConstructor("button", "button-" + type)
     button.appendChild(imageConstructor(type + ".png", type))
+    return button
 }
 function tagConstructor(data, type) {
     let tag = childConstructor("span", "tag", data.name)

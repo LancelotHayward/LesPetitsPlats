@@ -117,7 +117,8 @@ nav > div {
     display: flex;
     flex-direction: column;
     gap: 13px;
-    user-select: none
+    user-select: none;
+    max-width: 166px;
 }
 .tag-holder > * {
     display: none;

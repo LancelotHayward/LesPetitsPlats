@@ -16,50 +16,7 @@ function createSearchClearers(searchIDs, buttons) {
     }
 }
 //Get tags
-function getTagsFromJSON(json) {
-    let tags = []
-    for (recipe of json) {
-        if (recipe.ingredients) {
-            for (ingredient of recipe.ingredients) {
-                let new_tag = {
-                    "type": "Ingrédients",
-                    "name": ingredient.ingredient,
-                    "is_selected": false,
-                    "is_visible": true
-                }
-                if (notDuplicate(tags, new_tag)) {
-                    tags.push(new_tag)
-                }
-            }
-        }
-        if (recipe.appliance) {
-            let new_tag = {
-                "type": "Appareils",
-                "name": recipe.appliance,
-                "is_selected": false,
-                "is_visible": true
-            }
-            if (notDuplicate(tags, new_tag)) {
-                tags.push(new_tag)
-            }
-        }
-        if (recipe.ustensils) {
-            for (ustensils of recipe.ustensils) {
-                let new_tag = {
-                    "type": "Ustensiles",
-                    "name": ustensils,
-                    "is_selected": false,
-                    "is_visible": true
-                }
-                if (notDuplicate(tags, new_tag)) {
-                    tags.push(new_tag)
-                }
-            }
-        }
-    }
-    return tags
-}
-function notDuplicate(tags, new_tag) {
+function isNotDuplicate(tags, new_tag) {
     const new_tag_name = new_tag.name.toLowerCase()
     for (tag of tags) {
         const tag_name = tag.name.toLowerCase()
@@ -68,6 +25,46 @@ function notDuplicate(tags, new_tag) {
         }
     }
     return true
+}
+function createNewTag(tags, type, name) {
+    let new_tag = {
+        "type": type,
+        "name": name,
+        "is_selected": false,
+        "is_visible": true
+    }
+    if (isNotDuplicate(tags, new_tag)) {
+        return new_tag
+    }
+    return false
+}
+function getTagsFromJSON(json) {
+    let tags = []
+    for (recipe of json) {
+        if (recipe.ingredients) {
+            for (ingredient of recipe.ingredients) {
+                let new_tag = createNewTag(tags, "Ingrédients", ingredient.ingredient)
+                if (new_tag) {
+                    tags.push(new_tag)
+                }
+            }
+        }
+        if (recipe.appliance) {
+            let new_tag = createNewTag(tags, "Appareils", recipe.appliance)
+            if (new_tag) {
+                tags.push(new_tag)
+            }
+        }
+        if (recipe.ustensils) {
+            for (ustensils of recipe.ustensils) {
+                let new_tag = createNewTag(tags, "Ustensiles", ustensils)
+                if (new_tag) {
+                    tags.push(new_tag)
+                }
+            }
+        }
+    }
+    return tags
 }
 function getTagData(type, tag) {
     let tagData = {
@@ -94,8 +91,17 @@ function toggleTag(type, tagToToggle) {
         tags[0].remove()
     }
     tagList.sort((a,b) => b.is_selected - a.is_selected)
+    let has_selected_tags = false
     for (tag of tagList) {
-        holder.appendChild(tagConstructor(type, tag))
+        new_tag = tagConstructor(tag, type)
+        if (tag.is_selected) {
+            has_selected_tags = true
+        }
+        else if (has_selected_tags) {
+            has_selected_tags = false
+            new_tag.classList.add("first-unselected")
+        }
+        holder.appendChild(new_tag)
     }
 }
 //Tag Holders
@@ -131,13 +137,10 @@ function displayRecipies(data) {
 }
 //Init
 function init() {
+    const tags = getTagsFromJSON(recipes)
+    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementsByClassName("card-holder")[0])
     preventFormDefaults(document.getElementsByTagName("form"))
-    createSearchClearers(["search-normal", "search-ingredients", "search-appliances", "search-tools"], document.getElementsByClassName("button-clear"))
-    const holderIDs = ["tags-ingredients", "tags-appliances", "tags-tools"]
-    // createTagHolderTogglers(holderIDs, document.getElementsByClassName("tags-label"))
-    // updateNavLineSpace(holderIDs)
-    // createTagSelectionners(holderIDs)
+    createSearchClearers(["search-normal", "search-Ingrédients", "search-Appareils", "search-Ustensiles"], document.getElementsByClassName("button-clear"))
     displayRecipies(recipes)
-    getTagsFromJSON(recipes)
 }
 init()
