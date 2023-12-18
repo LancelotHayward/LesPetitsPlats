@@ -34,34 +34,19 @@ function createNewTag(tags, type, name) {
         "is_visible": true
     }
     if (isNotDuplicate(tags, new_tag)) {
-        return new_tag
+        tags.push(new_tag)
     }
-    return false
+    return tags
 }
 function getTagsFromJSON(json) {
     let tags = []
     for (recipe of json) {
-        if (recipe.ingredients) {
-            for (ingredient of recipe.ingredients) {
-                let new_tag = createNewTag(tags, "Ingrédients", ingredient.ingredient)
-                if (new_tag) {
-                    tags.push(new_tag)
-                }
-            }
+        tags = createNewTag(tags, "Appareils", recipe.appliance)
+        for (ingredient of recipe.ingredients) {
+            tags = createNewTag(tags, "Ingrédients", ingredient.ingredient)
         }
-        if (recipe.appliance) {
-            let new_tag = createNewTag(tags, "Appareils", recipe.appliance)
-            if (new_tag) {
-                tags.push(new_tag)
-            }
-        }
-        if (recipe.ustensils) {
-            for (ustensils of recipe.ustensils) {
-                let new_tag = createNewTag(tags, "Ustensiles", ustensils)
-                if (new_tag) {
-                    tags.push(new_tag)
-                }
-            }
+        for (ustensils of recipe.ustensils) {
+            tags = createNewTag(tags, "Ustensiles", ustensils)
         }
     }
     return tags
