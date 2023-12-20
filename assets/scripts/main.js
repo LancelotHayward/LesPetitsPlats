@@ -76,11 +76,12 @@ function toggleTag(type, tagToToggle) {
         tags[0].remove()
     }
     tagList.sort((a,b) => b.is_selected - a.is_selected)
-    let has_selected_tags = false
+    let has_selected_tags = 0
     for (tag of tagList) {
         new_tag = tagConstructor(tag, type)
         if (tag.is_selected) {
-            has_selected_tags = true
+            new_tag.setAttribute("data-left", has_selected_tags)
+            has_selected_tags++
         }
         else if (has_selected_tags) {
             has_selected_tags = false
@@ -123,7 +124,7 @@ function displayRecipies(data) {
 //Init
 function init() {
     const tags = getTagsFromJSON(recipes)
-    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementsByClassName("card-holder")[0])
+    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementById("selected-tags-holder"))
     preventFormDefaults(document.getElementsByTagName("form"))
     createSearchClearers(["search-normal", "search-Ingrédients", "search-Appareils", "search-Ustensiles"], document.getElementsByClassName("button-clear"))
     displayRecipies(recipes)

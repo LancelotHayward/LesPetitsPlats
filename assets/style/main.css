@@ -92,7 +92,7 @@ nav {
     justify-content: space-between;
     height: 132px;
     transform: translateY(21px);
-    padding: 0 100px;
+    padding: 0 100px 40px;
     position: relative;
     z-index: 1;
 }
@@ -207,6 +207,44 @@ nav > div {
 }
 .tags-visible .tag:hover {
     font-weight: bold;
+}
+#tags-Appareils:has(.selected):not(.tags-visible) .selected{
+    transform: translate(-261px, 58px);
+}
+#tags-Ustensiles:has(.selected):not(.tags-visible) .selected{
+    transform: translate(-522px, 58px);
+}
+.tag-holder:not(.tags-visible) .selected {
+    width: 200px;
+    --left-multiplier: 240px;
+    left: 0;
+}
+.tag-holder:not(.tags-visible) .selected[data-left="1"] {
+    left: var(--left-multiplier)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="2"] {
+    left: calc(var(--left-multiplier) * 2)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="3"] {
+    left: calc(var(--left-multiplier) * 3)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="4"] {
+    left: calc(var(--left-multiplier) * 4)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="5"] {
+    left: calc(var(--left-multiplier) * 5)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="6"] {
+    left: calc(var(--left-multiplier) * 6)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="7"] {
+    left: calc(var(--left-multiplier) * 7)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="8"] {
+    left: calc(var(--left-multiplier) * 8)
+}
+.tag-holder:not(.tags-visible) .selected[data-left="9"] {
+    left: calc(var(--left-multiplier) * 9)
 }
 .tag:hover {
     cursor: pointer;
