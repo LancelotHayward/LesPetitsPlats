@@ -106,7 +106,7 @@ function recipeConstructor(description) {
 }
 function ingredientsConstructor(ingredients) {
     let card_ingredients = childConstructor("div", "card-ingredients")
-    card_ingredients.appendChild(childConstructor("h3","Ingrédients"))
+    card_ingredients.appendChild(childConstructor("h3",false,"Ingrédients"))
     card_ingredients.appendChild(listConstructor(ingredients))
     return card_ingredients
 }

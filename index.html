@@ -14,11 +14,11 @@
             <h1>Chercher parmi plus de 1500 recettes <br>du quotidien, simples et délicieuses</h1>
             <form>
                 <input id="search-normal" type="search" placeholder="Rechercher une recette, un ingrédient, ...">
+                <button class="button-search" onclick="searchRecipe()">
+                    <img src="assets/images/search.png" alt="search">
+                </button>
                 <button class="button-clear">
                     <img src="assets/images/clear.png" alt="clear search">
-                </button>
-                <button class="button-search">
-                    <img src="assets/images/search.png" alt="search">
                 </button>
             </form>
         </div>
@@ -29,6 +29,7 @@
         </section>
     </main>
     <script src='assets/scripts/recipes.js'></script>
+    <script src='assets/scripts/search-loops.js'></script>
     <script src='assets/scripts/constructors.js'></script>
     <script src='assets/scripts/main.js'></script>
 </body>

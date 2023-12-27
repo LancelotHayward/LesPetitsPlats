@@ -101,25 +101,23 @@ function updateRecipeCount(count) {
 function countSelectedTags(tag_holder) {
     return tag_holder.getElementsByClassName("selected").length
 }
-function updateNavLineSpace(holderIDs) {
-    let requiredSpace = 0
-    for (holder of holderIDs) {
-        let count = countSelectedTags(document.getElementById(holder))
-        if (count > requiredSpace) {
-            requiredSpace = count
-        }
-    }
-    document.getElementsByTagName("nav")[0].setAttribute("data-selected-lines", requiredSpace)
-}
 function getRecipes(data, filter) {
     return data
 }
 function displayRecipies(data) {
     const holder = document.getElementsByClassName("card-holder")[0]
+    clearRecipes(holder)
     data.forEach(recipe => {
         holder.appendChild(cardConstructor(recipe))
     })
     updateRecipeCount(data.length.toString())
+}
+function clearRecipes(holder) {
+    const existing_recipes = holder.getElementsByTagName("article")
+    const length = existing_recipes.length
+    for (let i = 0; i < length; i++) {
+        existing_recipes[0].remove()
+    }
 }
 //Init
 function init() {

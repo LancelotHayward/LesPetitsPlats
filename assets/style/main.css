@@ -63,7 +63,7 @@ header form button {
 header form .button-search {
     background-color: black;
     padding: 12px;
-    transform: translateX(-85px);
+    transform: translateX(-62px);
 }
 header form .button-search img {
     filter: invert(1);
@@ -76,10 +76,10 @@ header form .button-search:hover img {
 }
 header form .button-clear {
     background: none;
-    transform: translateX(-100px);
+    transform: translateX(-157px);
     filter: invert(0.4);
 }
-input:placeholder-shown + .button-clear {
+input:placeholder-shown ~ .button-clear {
     visibility: hidden;
 }
 /* Main */
@@ -127,7 +127,7 @@ nav > div {
     transform: translateX(261px);
 }
 .tag-holder:nth-child(3) {
-    transform: translateX(522px);
+    transform: translateX(504px);
 }
 .tags-label {
     font-weight: 500;
@@ -218,6 +218,9 @@ nav > div {
     width: 200px;
     --left-multiplier: 240px;
     left: 0;
+}
+.tag-holder:not(.tags-visible) .selected::after {
+    content: url(../images/clear.png);
 }
 .tag-holder:not(.tags-visible) .selected[data-left="1"] {
     left: var(--left-multiplier)
