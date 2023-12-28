@@ -70,11 +70,7 @@ function toggleTag(type, tagToToggle) {
         }
         tagList.push(getTagData(type, tag))
     }
-    //Remove existing DOM elements (using traditional for loop because removing inside for (x of y) loops is cursed)
-    const length = tags.length
-    for (let i = 0; i < length; i++) {
-        tags[0].remove()
-    }
+    removeTags(tags)
     tagList.sort((a,b) => b.is_selected - a.is_selected)
     let has_selected_tags = 0
     for (tag of tagList) {
@@ -88,6 +84,12 @@ function toggleTag(type, tagToToggle) {
             new_tag.classList.add("first-unselected")
         }
         holder.appendChild(new_tag)
+    }
+}
+function removeTags(tags) {
+    const length = tags.length
+    for (let i = 0; i < length; i++) {
+        tags[0].remove()
     }
 }
 //Tag Holders
