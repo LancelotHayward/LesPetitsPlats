@@ -15,6 +15,13 @@ function createSearchClearers(searchIDs, buttons) {
             clearSearch(searchIDs[i]) })
     }
 }
+function searchListener(id) {
+    document.getElementById(id).addEventListener('input', function(e){
+        if (document.getElementById(id).value.length > 2) {
+            searchRecipe()
+        }
+    })
+}
 //Get tags
 function isNotDuplicate(tags, new_tag) {
     const new_tag_name = new_tag.name.toLowerCase()
@@ -103,9 +110,6 @@ function updateRecipeCount(count) {
 function countSelectedTags(tag_holder) {
     return tag_holder.getElementsByClassName("selected").length
 }
-function getRecipes(data, filter) {
-    return data
-}
 function displayRecipies(data) {
     const holder = document.getElementsByClassName("card-holder")[0]
     clearRecipes(holder)
@@ -113,6 +117,12 @@ function displayRecipies(data) {
         holder.appendChild(cardConstructor(recipe))
     })
     updateRecipeCount(data.length.toString())
+    if (data.length == 0) {
+        document.getElementById("no-recipes").classList.remove("no-display")
+    }
+    else {
+        document.getElementById("no-recipes").classList.add("no-display")
+    }
 }
 function clearRecipes(holder) {
     const existing_recipes = holder.getElementsByTagName("article")
@@ -128,5 +138,6 @@ function init() {
     preventFormDefaults(document.getElementsByTagName("form"))
     createSearchClearers(["search-normal", "search-Ingrédients", "search-Appareils", "search-Ustensiles"], document.getElementsByClassName("button-clear"))
     displayRecipies(recipes)
+    searchListener("search-normal")
 }
 init()

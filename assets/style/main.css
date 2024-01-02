@@ -85,6 +85,7 @@ input:placeholder-shown ~ .button-clear {
 /* Main */
 main {
     background-color: var(--light-gray);
+    min-height: 50vh;
 }
 /* Nav */
 nav {
@@ -302,4 +303,10 @@ nav > div {
 }
 .card-dose {
     color: var(--dark-gray);
+}
+#no-recipes {
+    text-align: center;
+}
+.no-display {
+    display: none;
 }
