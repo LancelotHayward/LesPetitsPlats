@@ -67,7 +67,12 @@ function getTagData(type, tag) {
     tagData.is_visible = tag.classList.contains("visible")
     return tagData
 }
-function toggleTag(type, tagToToggle) {
+//Toggle tag: Selects tag then replaces all tags with the selected at the top.
+function toggleTag(type, tag) {
+    toggleTagOnNav(type, tag)
+    toggleTagOnSelected(type, tag)
+}
+function toggleTagOnNav(type, tagToToggle) {
     const holder = document.getElementById("tags-" + type)
     const tags = holder.getElementsByClassName("tag")
     let tagList = []
@@ -79,24 +84,26 @@ function toggleTag(type, tagToToggle) {
     }
     removeTags(tags)
     tagList.sort((a,b) => b.is_selected - a.is_selected)
-    let has_selected_tags = 0
-    for (tag of tagList) {
-        new_tag = tagConstructor(tag, type)
-        if (tag.is_selected) {
-            new_tag.setAttribute("data-left", has_selected_tags)
-            has_selected_tags++
-        }
-        else if (has_selected_tags) {
-            has_selected_tags = false
-            new_tag.classList.add("first-unselected")
-        }
-        holder.appendChild(new_tag)
-    }
+    tagsFactory(holder, tagList, type)
 }
 function removeTags(tags) {
     const length = tags.length
     for (let i = 0; i < length; i++) {
         tags[0].remove()
+    }
+}
+function toggleTagOnSelected(type, tagToToggle) {
+    const selected_holder = document.getElementById("selected-tags-holder")
+    let exists = false
+    for (tag of selected_holder.getElementsByClassName("selected-tag")) {
+        if (tag.textContent == tagToToggle) {
+            exists = true
+            tag.remove()
+            break
+        }
+    }
+    if (!exists) {
+        selected_holder.appendChild(selectedTagConstructor(type, tagToToggle))
     }
 }
 //Tag Holders

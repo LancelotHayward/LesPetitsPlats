@@ -91,9 +91,7 @@ main {
 nav {
     display: flex;
     justify-content: space-between;
-    height: 132px;
-    transform: translateY(21px);
-    padding: 0 100px 40px;
+    padding: 20px 100px 40px;
     position: relative;
     z-index: 1;
 }
@@ -177,13 +175,13 @@ nav > div {
     height: 14px;
 }
 /* Selected breaks out of tag-holder when not tags-visible */
-.selected {
-    display: flex;
+.selected, .selected-tag {
+    /* display: flex; */
     background-color: var(--yellow);
-    position: absolute;
+    /* position: absolute;
     padding: 16px;
     border-radius: 11px;
-    transform: translate(-16px, 58px);
+    transform: translate(-16px, 58px); */
 }
 .tags-visible .selected {
     position: relative;
@@ -192,9 +190,20 @@ nav > div {
     transform: unset;
     margin: 0 -16px;
 }
-.selected::after {
-    content: url(../images/close.png);
-    margin-left: 63px;
+#selected-tags-holder {
+    display: flex;
+    gap: 1vw;
+    flex-wrap: wrap;
+    margin: 0 0 40px 100px;
+}
+.selected-tag {
+    padding: 17px;
+    border-radius: 10px;
+}
+.selected-tag::after {
+    content: url(../images/clear.png);
+    transform: translateY(2px);
+    margin-left: 1vw;
 }
 .tags-visible .selected::after {
     content: unset;
@@ -204,12 +213,12 @@ nav > div {
     content: url(../images/remove.png);
     position: absolute;
     right: 14px;
-    transform: translateY(3px);
+    transform: translateY(2px);
 }
-.tags-visible .tag:hover {
+.tags-visible .tag:hover, .selected-tag:hover {
     font-weight: bold;
 }
-#tags-Appareils:has(.selected):not(.tags-visible) .selected{
+/* #tags-Appareils:has(.selected):not(.tags-visible) .selected{
     transform: translate(-261px, 58px);
 }
 #tags-Ustensiles:has(.selected):not(.tags-visible) .selected{
@@ -249,7 +258,7 @@ nav > div {
 }
 .tag-holder:not(.tags-visible) .selected[data-left="9"] {
     left: calc(var(--left-multiplier) * 9)
-}
+} */
 .tag:hover {
     cursor: pointer;
 }
