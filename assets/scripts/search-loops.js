@@ -9,14 +9,25 @@ function searchRecipe() {
 function searchByLoop(user_input) {
     const filteredRecipes = filterRecipes()
     let result = []
-    for (recipe of filteredRecipes) {
+    for (let recipe of filteredRecipes) {
         if (compareTerms(recipe.name, user_input) || compareTerms(recipe.description, user_input)) {
             result.push(recipe)
             continue
         }
-        for (element of recipe.ingredients) {
+        let found_ingredient = false
+        for (let element of recipe.ingredients) {
             if (compareTerms(element.ingredient, user_input)) {
                 result.push(recipe)
+                found_ingredient = true
+                break
+            }
+        }
+        if (!found_ingredient) {
+            for (let ustensil of recipe.ustensils) {
+                if (compareTerms(ustensil, user_input)) {
+                    result.push(recipe)
+                    break
+                }
             }
         }
     }
@@ -28,6 +39,9 @@ function compareTerms(first_term, second_term) {
 function filterRecipes() {
     let filtered_recipes = []
     filtered_recipes = filterType("Ingrédients", filtered_recipes)
+    if (filtered_recipes.length == 0) {
+        filtered_recipes = recipes
+    }
     return filtered_recipes
 }
 function filterType(type, filtered_recipes) {
@@ -37,7 +51,6 @@ function filterType(type, filtered_recipes) {
     for (selected_tag of selected_tags_elements) {
         selected_tags.push(selected_tag.innerText)
     }
-    console.log(selected_tags)
     for (recipe of recipes) {
         if (type == "Ingrédients") {
             for (element of recipe.ingredients) {

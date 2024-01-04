@@ -1,6 +1,7 @@
 // Clear Searches
 function clearSearch(id) {
     document.getElementById(id).value = ""
+    searchRecipe()
 }
 function preventFormDefaults(forms) {
     for (form of forms) {
@@ -16,8 +17,9 @@ function createSearchClearers(searchIDs, buttons) {
     }
 }
 function searchListener(id) {
-    document.getElementById(id).addEventListener('input', function(e){
-        if (document.getElementById(id).value.length > 2) {
+    let search_bar = document.getElementById(id)
+    search_bar.addEventListener('input', function(e){
+        if (search_bar.value.length > 2 || search_bar.value.length == 0) {
             searchRecipe()
         }
     })
