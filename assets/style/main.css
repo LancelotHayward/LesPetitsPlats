@@ -190,7 +190,7 @@ nav > div {
     transform: unset;
     margin: 0 -16px;
 }
-#selected-tags-holder {
+#selected-tag-holder {
     display: flex;
     gap: 1vw;
     flex-wrap: wrap;

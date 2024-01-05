@@ -95,7 +95,7 @@ function removeTags(tags) {
     }
 }
 function toggleTagOnSelected(type, tagToToggle) {
-    const selected_holder = document.getElementById("selected-tags-holder")
+    const selected_holder = document.getElementById("selected-tag-holder")
     let exists = false
     for (tag of selected_holder.getElementsByClassName("selected-tag")) {
         if (tag.textContent == tagToToggle) {
@@ -147,12 +147,12 @@ function searchRecipe() {
     displayRecipies(result) //bug: recipe count is removed
     removeTags(document.getElementsByClassName("tag")) //bug: removes selected tags
     document.getElementsByTagName("nav")[0].remove()
-    document.getElementsByTagName("main")[0].insertBefore(navConstructor(getTagsFromJSON(result)), document.getElementById("selected-tags-holder"))
+    document.getElementsByTagName("main")[0].insertBefore(navConstructor(getTagsFromJSON(result)), document.getElementById("selected-tag-holder"))
 }
 //Init
 function init() {
     const tags = getTagsFromJSON(recipes)
-    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementById("selected-tags-holder"))
+    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementById("selected-tag-holder"))
     preventFormDefaults(document.getElementsByTagName("form"))
     createSearchClearers(["search-normal", "search-Ingrédients", "search-Appareils", "search-Ustensiles"], document.getElementsByClassName("button-clear"))
     displayRecipies(recipes)

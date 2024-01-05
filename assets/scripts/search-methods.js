@@ -12,12 +12,12 @@ function compareTerms(first_term, second_term) {
     return first_term.toLowerCase().includes(second_term.toLowerCase())
 }
 function containsIngredient(ingredients, user_input) {
-    return ingredients.filter(element =>
+    return ingredients.some(element =>
         compareTerms(element.ingredient, user_input)
-    ).length
+    )
 }
 function usesUstensil(ustensils, user_input) {
-    return ustensils.filter(ustensil =>
+    return ustensils.some(ustensil =>
         compareTerms(ustensil, user_input)
-    ).length
+    )
 }
