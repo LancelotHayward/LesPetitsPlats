@@ -121,26 +121,23 @@ function getSelectedTags() {
 //Search tags
 function filterRecipesByTags() {
     let selected_tags = getSelectedTags()
-    let filtered_recipes = recipes.filter(recipe => {
-        for (let type of selected_tags) {
-            for (tag of type) {
-                if (recipe.ingredients.some(element =>
-                    compareTerms(element.ingredient, tag.textContent)
-                )) {
+    let filtered_recipes = recipes
+    for (let type of selected_tags) {
+        for (tag of type) {
+            filtered_recipes = filtered_recipes.filter(recipe => {
+                if (recipe.ingredients.some(element => compareTerms(element.ingredient, tag.textContent))) {
                     return true
                 }
-                if (recipe.ustensils.some(ustensil =>
-                    compareTerms(ustensil, tag.textContent)
-                )) {
+                if (recipe.ustensils.some(ustensil => compareTerms(ustensil, tag.textContent))) {
                     return true
                 }
                 if (compareTerms(recipe.appliance, tag.textContent)) {
                     return true
                 }
-            }
+                return false
+            })
         }
-        return false
-    })
+    }
     if (filtered_recipes.length == 0) {
         return recipes
     }

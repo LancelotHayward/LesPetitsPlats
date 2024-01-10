@@ -174,8 +174,11 @@ nav > div {
 .tag-holder .button-search img {
     height: 14px;
 }
-/* Selected breaks out of tag-holder when not tags-visible */
-.selected, .selected-tag {
+/* Tags */
+.tag:not(.is_visible) {
+    display: none;
+}
+.is_selected {
     /* display: flex; */
     background-color: var(--yellow);
     /* position: absolute;
@@ -196,26 +199,31 @@ nav > div {
     flex-wrap: wrap;
     margin: 0 0 40px 100px;
 }
-.selected-tag {
+.is_selected {
     padding: 17px;
     border-radius: 10px;
 }
-.selected-tag::after {
+.is_selected::after {
     content: url(../images/clear.png);
     transform: translateY(2px);
     margin-left: 1vw;
 }
-.tags-visible .selected::after {
+.tags-visible .is_selected {
+    transform: translateX(-16px);
+    border-radius: unset;
+    width: 164px
+}
+.tags-visible .is_selected::after {
     content: unset;
     margin-left: unset;
 }
-.tags-visible .selected:hover::after {
+.tags-visible .is_selected:hover::after {
     content: url(../images/remove.png);
     position: absolute;
     right: 14px;
     transform: translateY(2px);
 }
-.tags-visible .tag:hover, .selected-tag:hover {
+.tags-visible .tag:hover, .is_selected:hover {
     font-weight: bold;
 }
 /* #tags-Appareils:has(.selected):not(.tags-visible) .selected{
