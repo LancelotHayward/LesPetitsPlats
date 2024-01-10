@@ -143,7 +143,7 @@ function clearRecipes(holder) {
 //Search
 function searchRecipe() {
     const user_input = document.getElementById("search-normal").value
-    const result = searchByMethods(user_input)
+    const result = searchByLoop(user_input)
     displayRecipies(result)
     hideIrrelevantTags(result)
     // removeTags(document.getElementsByClassName("tag")) //bug: removes selected tags

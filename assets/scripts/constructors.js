@@ -50,7 +50,7 @@ function tagSearchConstructor(type) {
     let form = document.createElement("form")
     form.appendChild(searchBoxConstructor(type))
     form.appendChild(searchButtonConstructor("clear"))
-    form.appendChild(searchButtonConstructor("search"))
+    form.appendChild(searchButtonConstructor("search", type))
     return form
 }
 function searchBoxConstructor(type) {
@@ -60,9 +60,14 @@ function searchBoxConstructor(type) {
     searchBox.setAttribute("placeholder", "")
     return searchBox
 }
-function searchButtonConstructor(type) {
-    let button = childConstructor("button", "button-" + type)
-    button.appendChild(imageConstructor(type + ".png", type))
+function searchButtonConstructor(button_type, tag_type = false) {
+    let button = childConstructor("button", "button-" + button_type)
+    button.appendChild(imageConstructor(button_type + ".png", button_type))
+    if (tag_type) {
+        button.addEventListener('click', function(e){
+            searchTags(tag_type)
+        })
+    }
     return button
 }
 // function tagsFactory(tag_holder, tags, type) {

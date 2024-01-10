@@ -90,8 +90,8 @@ function toggleTag(type, name) {
     searchRecipe()
 }
     //Search
-function hideIrrelevantTags(data) {
-    let visible_tags = getTagsFromJSON(data)
+function hideIrrelevantTags(relevant_tags) {
+    let visible_tags = getTagsFromJSON(relevant_tags)
     let tags = document.getElementsByClassName("tag")
     let irrelevant_tags = []
     for (tag of tags) {
@@ -121,6 +121,26 @@ function getSelectedTags() {
 //Search tags
 function filterRecipesByTags() {
     let selected_tags = getSelectedTags()
+    // let filtered_recipes = recipes.filter(recipe => {
+    //     for (let type of selected_tags) {
+    //         for (tag of type) {
+    //             if (recipe.ingredients.some(element =>
+    //                 compareTerms(element.ingredient, tag.textContent)
+    //             )) {
+    //                 return true
+    //             }
+    //             if (recipe.ustensils.some(ustensil =>
+    //                 compareTerms(ustensil, tag.textContent)
+    //             )) {
+    //                 return true
+    //             }
+    //             if (compareTerms(recipe.appliance, tag.textContent)) {
+    //                 return true
+    //             }
+    //         }
+    //     }
+    //     return false
+    // })
     let filtered_recipes = recipes
     for (let type of selected_tags) {
         for (tag of type) {
@@ -142,4 +162,19 @@ function filterRecipesByTags() {
         return recipes
     }
     return filtered_recipes
+}
+function searchTags(type) {
+    const tag_holder = document.getElementById("tags-" + type)
+    const user_input = tag_holder.getElementsByTagName("input")[0].value
+    if (user_input.length == 0) {
+        searchRecipe()
+        return
+    }
+    for (tag of document.getElementsByClassName("tag")) {
+        if (tag.classList.contains("is_visible") && tag.getAttribute("data-type") == type) {
+            if (!compareTerms(tag.innerText, user_input)) {
+                tag.classList.remove("is_visible")
+            }
+        }
+    }
 }
