@@ -87,16 +87,21 @@ function toggleTag(type, name) {
         })
         selected_display.appendChild(cloned_node)
     }
+    searchRecipe()
 }
     //Search
 function hideIrrelevantTags(data) {
+    let visible_tags = getTagsFromJSON(data)
     let tags = document.getElementsByClassName("tag")
+    let irrelevant_tags = []
     for (tag of tags) {
         //Show all
         tag.classList.add("is_visible")
         //Filter
-        let irrelevant_tags = []
-        if (!tag.classList.contains("is_selected") && !data.includes(tag)) {
+        if (!tag.classList.contains("is_selected") &&
+            !visible_tags.some(visible_tag => {
+                return compareTerms(visible_tag.name, tag.innerText)
+            })) {
             irrelevant_tags.push(tag)
         }
     }
@@ -124,9 +129,17 @@ function filterRecipesByTags() {
                 )) {
                     return true
                 }
-                return false
+                if (recipe.ustensils.some(ustensil =>
+                    compareTerms(ustensil, tag.textContent)
+                )) {
+                    return true
+                }
+                if (compareTerms(recipe.appliance, tag.textContent)) {
+                    return true
+                }
             }
         }
+        return false
     })
     if (filtered_recipes.length == 0) {
         return recipes

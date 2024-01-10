@@ -144,7 +144,8 @@ function clearRecipes(holder) {
 function searchRecipe() {
     const user_input = document.getElementById("search-normal").value
     const result = searchByMethods(user_input)
-    displayRecipies(result) //bug: recipe count is removed
+    displayRecipies(result)
+    hideIrrelevantTags(result)
     // removeTags(document.getElementsByClassName("tag")) //bug: removes selected tags
     // document.getElementsByTagName("nav")[0].remove()
     // document.getElementsByTagName("main")[0].insertBefore(navConstructor(getTagsFromJSON(result)), document.getElementById("selected-tag-holder"))
