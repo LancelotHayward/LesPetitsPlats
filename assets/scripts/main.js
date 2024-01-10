@@ -25,89 +25,89 @@ function searchListener(id) {
     })
 }
 //Get tags
-function isNotDuplicate(tags, new_tag) {
-    const new_tag_name = new_tag.name.toLowerCase()
-    for (tag of tags) {
-        const tag_name = tag.name.toLowerCase()
-        if (tag_name == new_tag_name && tag.type == new_tag.type) {
-            return false
-        }
-    }
-    return true
-}
-function createNewTag(tags, type, name) {
-    let new_tag = {
-        "type": type,
-        "name": name,
-        "is_selected": false,
-        "is_visible": true
-    }
-    if (isNotDuplicate(tags, new_tag)) {
-        tags.push(new_tag)
-    }
-    return tags
-}
-function getTagsFromJSON(json) {
-    let tags = []
-    for (recipe of json) {
-        tags = createNewTag(tags, "Appareils", recipe.appliance)
-        for (ingredient of recipe.ingredients) {
-            tags = createNewTag(tags, "Ingrédients", ingredient.ingredient)
-        }
-        for (ustensils of recipe.ustensils) {
-            tags = createNewTag(tags, "Ustensiles", ustensils)
-        }
-    }
-    return tags
-}
-function getTagData(type, tag) {
-    let tagData = {
-        "type": type,
-        "name": tag.textContent
-    }
-    tagData.is_selected = tag.classList.contains("selected")
-    tagData.is_visible = tag.classList.contains("visible")
-    return tagData
-}
+// function isNotDuplicate(tags, new_tag) {
+//     const new_tag_name = new_tag.name.toLowerCase()
+//     for (tag of tags) {
+//         const tag_name = tag.name.toLowerCase()
+//         if (tag_name == new_tag_name && tag.type == new_tag.type) {
+//             return false
+//         }
+//     }
+//     return true
+// }
+// function createNewTag(tags, type, name) {
+//     let new_tag = {
+//         "type": type,
+//         "name": name,
+//         "is_selected": false,
+//         "is_visible": true
+//     }
+//     if (isNotDuplicate(tags, new_tag)) {
+//         tags.push(new_tag)
+//     }
+//     return tags
+// }
+// function getTagsFromJSON(json) {
+//     let tags = []
+//     for (recipe of json) {
+//         tags = createNewTag(tags, "Appareils", recipe.appliance)
+//         for (ingredient of recipe.ingredients) {
+//             tags = createNewTag(tags, "Ingrédients", ingredient.ingredient)
+//         }
+//         for (ustensils of recipe.ustensils) {
+//             tags = createNewTag(tags, "Ustensiles", ustensils)
+//         }
+//     }
+//     return tags
+// }
+// function getTagData(type, tag) {
+//     let tagData = {
+//         "type": type,
+//         "name": tag.textContent
+//     }
+//     tagData.is_selected = tag.classList.contains("selected")
+//     tagData.is_visible = tag.classList.contains("visible")
+//     return tagData
+// }
 //Toggle tag: Selects tag then replaces all tags with the selected at the top.
-function toggleTag(type, tag) {
-    toggleTagOnNav(type, tag)
-    toggleTagOnSelected(type, tag)
-}
-function toggleTagOnNav(type, tagToToggle) {
-    const holder = document.getElementById("tags-" + type)
-    const tags = holder.getElementsByClassName("tag")
-    let tagList = []
-    for (tag of tags) {
-        if (tag.textContent == tagToToggle) {
-            tag.classList.toggle("selected")
-        }
-        tagList.push(getTagData(type, tag))
-    }
-    removeTags(tags)
-    tagList.sort((a,b) => b.is_selected - a.is_selected)
-    tagsFactory(holder, tagList, type)
-}
-function removeTags(tags) {
-    const length = tags.length
-    for (let i = 0; i < length; i++) {
-        tags[0].remove()
-    }
-}
-function toggleTagOnSelected(type, tagToToggle) {
-    const selected_holder = document.getElementById("selected-tag-holder")
-    let exists = false
-    for (tag of selected_holder.getElementsByClassName("selected-tag")) {
-        if (tag.textContent == tagToToggle) {
-            exists = true
-            tag.remove()
-            break
-        }
-    }
-    if (!exists) {
-        selected_holder.appendChild(selectedTagConstructor(type, tagToToggle))
-    }
-}
+// function toggleTag(type, tag) {
+//     toggleTagOnNav(type, tag)
+//     toggleTagOnSelected(type, tag)
+// }
+// function toggleTagOnNav(type, tagToToggle) {
+//     const holder = document.getElementById("tags-" + type)
+//     const tags = holder.getElementsByClassName("tag")
+//     let tagList = []
+//     for (tag of tags) {
+//         if (tag.textContent == tagToToggle) {
+//             tag.classList.toggle("selected")
+//         }
+//         tagList.push(getTagData(type, tag))
+//     }
+//     removeTags(tags)
+//     tagList.sort((a,b) => b.is_selected - a.is_selected)
+//     tagsFactory(holder, tagList, type)
+// }
+// function removeTags(tags) {
+//     const length = tags.length
+//     for (let i = 0; i < length; i++) {
+//         tags[0].remove()
+//     }
+// }
+// function toggleTagOnSelected(type, tagToToggle) {
+//     const selected_holder = document.getElementById("selected-tag-holder")
+//     let exists = false
+//     for (tag of selected_holder.getElementsByClassName("selected-tag")) {
+//         if (tag.textContent == tagToToggle) {
+//             exists = true
+//             tag.remove()
+//             break
+//         }
+//     }
+//     if (!exists) {
+//         selected_holder.appendChild(selectedTagConstructor(type, tagToToggle))
+//     }
+// }
 //Tag Holders
 function toggleTagHolder(id) {
     document.getElementById(id).classList.toggle("tags-visible")
@@ -145,14 +145,15 @@ function searchRecipe() {
     const user_input = document.getElementById("search-normal").value
     const result = searchByMethods(user_input)
     displayRecipies(result) //bug: recipe count is removed
-    removeTags(document.getElementsByClassName("tag")) //bug: removes selected tags
-    document.getElementsByTagName("nav")[0].remove()
-    document.getElementsByTagName("main")[0].insertBefore(navConstructor(getTagsFromJSON(result)), document.getElementById("selected-tag-holder"))
+    // removeTags(document.getElementsByClassName("tag")) //bug: removes selected tags
+    // document.getElementsByTagName("nav")[0].remove()
+    // document.getElementsByTagName("main")[0].insertBefore(navConstructor(getTagsFromJSON(result)), document.getElementById("selected-tag-holder"))
 }
 //Init
 function init() {
     const tags = getTagsFromJSON(recipes)
-    document.getElementsByTagName("main")[0].insertBefore(navConstructor(tags), document.getElementById("selected-tag-holder"))
+    document.getElementsByTagName("main")[0].insertBefore(navConstructor(), document.getElementById("selected-tag-holder"))
+    tagsFactory(tags)
     preventFormDefaults(document.getElementsByTagName("form"))
     createSearchClearers(["search-normal", "search-Ingrédients", "search-Appareils", "search-Ustensiles"], document.getElementsByClassName("button-clear"))
     displayRecipies(recipes)

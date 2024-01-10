@@ -16,29 +16,27 @@ function imageConstructor(file_name, title) {
 }
 
 //Nav
-function navConstructor(tags) {
+function navConstructor() {
     let nav = document.createElement("nav")
 
     //Card holders
     let navDiv = document.createElement("div")
-    navDiv.appendChild(tagHolderConstructor("Ingrédients", tags))
-    navDiv.appendChild(tagHolderConstructor("Appareils", tags))
-    navDiv.appendChild(tagHolderConstructor("Ustensiles", tags))
+    navDiv.appendChild(tagHolderConstructor("Ingrédients"))
+    navDiv.appendChild(tagHolderConstructor("Appareils"))
+    navDiv.appendChild(tagHolderConstructor("Ustensiles"))
     nav.appendChild(navDiv)
-
     //Recipe count
     nav.appendChild(childConstructor("p", false))
 
     return nav
 }
-function tagHolderConstructor(type, tags) {
-    tags = tags.filter(tag => tag.type == type)
+function tagHolderConstructor(type) {
     let tag_holder = childConstructor("div", "tag-holder")
     let tag_holder_id = "tags-" + type
     tag_holder.setAttribute("id", tag_holder_id)
     tag_holder.appendChild(tagLabelConstructor(type, tag_holder_id))
     tag_holder.appendChild(tagSearchConstructor(type))
-    tag_holder = tagsFactory(tag_holder, tags, type)
+    // tag_holder = tagsFactory(tag_holder, tags, type)
     return tag_holder
 }
 function tagLabelConstructor(type, tag_holder_id) {
@@ -67,33 +65,33 @@ function searchButtonConstructor(type) {
     button.appendChild(imageConstructor(type + ".png", type))
     return button
 }
-function tagsFactory(tag_holder, tags, type) {
-    tags.forEach(tag => {
-        tag_holder.appendChild(tagConstructor(tag, type))
-    })
-    return tag_holder
-}
-function tagConstructor(data, type) {
-    let tag = childConstructor("span", "tag", data.name)
-    if (data.is_selected) {
-        tag.classList.add("selected")
-    }
-    if (data.is_visible) {
-        tag.classList.add("visible")
-    }
-    tag.addEventListener("click", function(){
-        toggleTag(type, data.name)
-    })
-    return tag
-}
+// function tagsFactory(tag_holder, tags, type) {
+//     tags.forEach(tag => {
+//         tag_holder.appendChild(tagConstructor(tag, type))
+//     })
+//     return tag_holder
+// }
+// function tagConstructor(data, type) {
+//     let tag = childConstructor("span", "tag", data.name)
+//     if (data.is_selected) {
+//         tag.classList.add("selected")
+//     }
+//     if (data.is_visible) {
+//         tag.classList.add("visible")
+//     }
+//     tag.addEventListener("click", function(){
+//         toggleTag(type, data.name)
+//     })
+//     return tag
+// }
 //Selected Tags
-function selectedTagConstructor(type, tag) {
-    let selected_tag = childConstructor("span", "selected-tag", tag)
-    selected_tag.addEventListener("click", function(){
-        toggleTag(type, tag)
-    })
-    return selected_tag
-}
+// function selectedTagConstructor(type, tag) {
+//     let selected_tag = childConstructor("span", "selected-tag", tag)
+//     selected_tag.addEventListener("click", function(){
+//         toggleTag(type, tag)
+//     })
+//     return selected_tag
+// }
 //Recipes
 function cardConstructor(recipe) {
     let card = childConstructor("article", "card")

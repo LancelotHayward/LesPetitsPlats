@@ -1,4 +1,7 @@
 //JSON
+function isNotDuplicate(tags, new_tag) {
+    return tags.filter(tag => tag.name.toLowerCase() == new_tag.toLowerCase()).length == 0
+}
 function createTagData(type, name, is_selected = false, is_visible = true) {
     return {
         "type": type,
@@ -10,15 +13,21 @@ function createTagData(type, name, is_selected = false, is_visible = true) {
 function getTagsFromJSON(json) {
     let tags = []
     for (recipe of json) {
-        for (ingredient of recipe.ingredients) {
-            tags.push(createTag("Ingrédients", ingredient.ingredient))
+        for (element of recipe.ingredients) {
+            if (isNotDuplicate(tags, element.ingredient)) {
+                tags.push(createTagData("Ingrédients", element.ingredient))
+            }
         }
-        for (ustensils of recipe.ustensils) {
-            tags.push(createTag("Ustensiles", ustensils))
+        for (ustensil of recipe.ustensils) {
+            if (isNotDuplicate(tags, ustensil)) {
+                tags.push(createTagData("Ustensiles", ustensil))
+            }
         }
-        tags.push(createTag("Appareils", recipe.appliance))
+        if (isNotDuplicate(tags, recipe.appliance)) {
+            tags.push(createTagData("Appareils", recipe.appliance))
+        }
     }
-    return Array.from(new Set(tags))
+    return tags
 }
 //HTML
     //Init
@@ -51,32 +60,46 @@ function toggleTag(type, name) {
     let selected_display = document.getElementById("selected-tag-holder")
     let tag_holder = document.getElementById("tags-" + type)
     let sibling_tags = tag_holder.getElementsByClassName("tag")
-    let tag_element = sibling_tags.filter(tag =>
-        tag.name == name
-    )
+    let tag_element
+    for (sibling of sibling_tags) {
+        if (sibling.textContent == name) {
+            tag_element = sibling
+        }
+    }
     if (tag_element.classList.contains("is_selected")) {
         tag_element.classList.remove("is_selected")
-        selected_display.getElementsByClassName("tag").filter(tag =>
-            tag.name == name
-        ).remove()
+        // selected_display.getElementsByClassName("tag").filter(tag =>
+        //     tag.name == name
+        // ).remove()
+        for (tag of selected_display.getElementsByClassName("tag")) {
+            if (tag.innerText == name) {
+                tag.remove()
+            }
+        }
     }
     else {
         tag_element.classList.add("is_selected")
-        selected_display.appendChild(tag_element)
+        const tag_type = tag_element.getAttribute("data-type")
+        const tag_name = tag_element.innerText
+        let cloned_node = tag_element.cloneNode(true)
+        cloned_node.addEventListener("click", function(){
+            toggleTag(tag_type, tag_name)
+        })
+        selected_display.appendChild(cloned_node)
     }
 }
     //Search
 function hideIrrelevantTags(data) {
     let tags = document.getElementsByClassName("tag")
+    for (tag of tags) {
         //Show all
-    tags.forEach(tag =>
         tag.classList.add("is_visible")
-    )
         //Filter
-    let irrelevant_tags = tags.filter(tag =>
-        !tag.classList.contains("is_selected") &&
-        !data.includes(tag)
-    )
+        let irrelevant_tags = []
+        if (!tag.classList.contains("is_selected") && !data.includes(tag)) {
+            irrelevant_tags.push(tag)
+        }
+    }
         //Hide
     irrelevant_tags.forEach(tag =>
         tag.classList.remove("is_visible")
