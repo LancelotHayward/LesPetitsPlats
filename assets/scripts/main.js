@@ -33,7 +33,7 @@ function clearRecipes(holder) {
 //Search
 function searchRecipe() {
     const user_input = document.getElementById("search-normal").value
-    const result = searchByMethods(user_input)
+    const result = searchByLoops(user_input)
     displayRecipies(result)
     hideIrrelevantTags(result)
 }
