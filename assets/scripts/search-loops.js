@@ -1,4 +1,4 @@
-function searchByLoop(user_input) {
+function searchByLoops(user_input) {
     const filteredRecipes = filterRecipesByTags()
     let result = []
     for (let recipe of filteredRecipes) {

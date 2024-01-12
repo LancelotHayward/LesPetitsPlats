@@ -70,34 +70,6 @@ function searchButtonConstructor(button_type, tag_type = false) {
     }
     return button
 }
-// function tagsFactory(tag_holder, tags, type) {
-//     tags.forEach(tag => {
-//         tag_holder.appendChild(tagConstructor(tag, type))
-//     })
-//     return tag_holder
-// }
-// function tagConstructor(data, type) {
-//     let tag = childConstructor("span", "tag", data.name)
-//     if (data.is_selected) {
-//         tag.classList.add("selected")
-//     }
-//     if (data.is_visible) {
-//         tag.classList.add("visible")
-//     }
-//     tag.addEventListener("click", function(){
-//         toggleTag(type, data.name)
-//     })
-//     return tag
-// }
-//Selected Tags
-// function selectedTagConstructor(type, tag) {
-//     let selected_tag = childConstructor("span", "selected-tag", tag)
-//     selected_tag.addEventListener("click", function(){
-//         toggleTag(type, tag)
-//     })
-//     return selected_tag
-// }
-//Recipes
 function cardConstructor(recipe) {
     let card = childConstructor("article", "card")
     card.appendChild(childConstructor("p", "preptime", recipe.time.toString() + "min"))

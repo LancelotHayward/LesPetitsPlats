@@ -68,9 +68,6 @@ function toggleTag(type, name) {
     }
     if (tag_element.classList.contains("is_selected")) {
         tag_element.classList.remove("is_selected")
-        // selected_display.getElementsByClassName("tag").filter(tag =>
-        //     tag.name == name
-        // ).remove()
         for (tag of selected_display.getElementsByClassName("tag")) {
             if (tag.innerText == name) {
                 tag.remove()
@@ -110,59 +107,7 @@ function hideIrrelevantTags(relevant_tags) {
         tag.classList.remove("is_visible")
     )
 }
-function getSelectedTags() {
-    return ["Ingrédients", "Ustensiles", "Appareils"].map(type =>
-        Array.from(document.getElementById("tags-" + type).getElementsByClassName("tag"))
-            .filter(tag => 
-                tag.classList.contains("is_selected")
-            )
-    )
-}
-//Search tags
-function filterRecipesByTags() {
-    let selected_tags = getSelectedTags()
-    // let filtered_recipes = recipes.filter(recipe => {
-    //     for (let type of selected_tags) {
-    //         for (tag of type) {
-    //             if (recipe.ingredients.some(element =>
-    //                 compareTerms(element.ingredient, tag.textContent)
-    //             )) {
-    //                 return true
-    //             }
-    //             if (recipe.ustensils.some(ustensil =>
-    //                 compareTerms(ustensil, tag.textContent)
-    //             )) {
-    //                 return true
-    //             }
-    //             if (compareTerms(recipe.appliance, tag.textContent)) {
-    //                 return true
-    //             }
-    //         }
-    //     }
-    //     return false
-    // })
-    let filtered_recipes = recipes
-    for (let type of selected_tags) {
-        for (tag of type) {
-            filtered_recipes = filtered_recipes.filter(recipe => {
-                if (recipe.ingredients.some(element => compareTerms(element.ingredient, tag.textContent))) {
-                    return true
-                }
-                if (recipe.ustensils.some(ustensil => compareTerms(ustensil, tag.textContent))) {
-                    return true
-                }
-                if (compareTerms(recipe.appliance, tag.textContent)) {
-                    return true
-                }
-                return false
-            })
-        }
-    }
-    if (filtered_recipes.length == 0) {
-        return recipes
-    }
-    return filtered_recipes
-}
+//Advanced Search
 function searchTags(type) {
     const tag_holder = document.getElementById("tags-" + type)
     const user_input = tag_holder.getElementsByTagName("input")[0].value
